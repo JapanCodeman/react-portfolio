@@ -10,10 +10,10 @@ export default class PortfolioContainer extends Component {
       pageTitle: "Welcome to my portfolio",
       isLoading: false,
       data: [
-        { title: "Maxie's Pizza and Pasta", category: "Food Service"},
-        { title: "All Seasons Mental Health", category: "Supportive Care" }, 
-        { title: "Fuchu City Board of Education", category: "Education" },
-        { title: "Onomichi Jr/Sr High School", category: "Education" }
+        { title: "Maxie's Pizza and Pasta", category: "Food Service", slug: 'maxie\'s' },
+        { title: "All Seasons Mental Health", category: "Supportive Care", slug: 'all-seasons' }, 
+        { title: "Fuchu City Board of Education", category: "Education", slug: 'fuchu-boe' },
+        { title: "Onomichi Jr/Sr High School", category: "Education", slug: 'onomichi-jshs' }
       ]
     };
 
@@ -30,7 +30,7 @@ export default class PortfolioContainer extends Component {
 
   portfolioItems() {
     return this.state.data.map(item => {
-      return <PortfolioItem title={item.title} url={"google.com"} />;
+      return <PortfolioItem title={item.title} url={"google.com"} slug={item.slug} />;
     });
   }
 
