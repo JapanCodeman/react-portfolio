@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios';
 
 import PortfolioItem from "./portfolio-item";
 
@@ -9,12 +10,7 @@ export default class PortfolioContainer extends Component {
     this.state = {
       pageTitle: "Welcome to my portfolio",
       isLoading: false,
-      data: [
-        { title: "Maxie's Pizza and Pasta", category: "Food Service", slug: 'maxie\'s' },
-        { title: "All Seasons Mental Health", category: "Supportive Care", slug: 'all-seasons' }, 
-        { title: "Fuchu City Board of Education", category: "Education", slug: 'fuchu-boe' },
-        { title: "Onomichi Jr/Sr High School", category: "Education", slug: 'onomichi-jshs' }
-      ]
+      data: []
     };
 
     this.handleFilter = this.handleFilter.bind(this);
@@ -28,10 +24,31 @@ export default class PortfolioContainer extends Component {
     })
   }
 
+  getPortfolioItems() {
+    axios.get('https://ryansurdick.devcamp.space/portfolio/portfolio_items')
+    .then(response => {
+    // handle success
+    this.setState({
+      data: response.data.portfolio_items
+      });
+    })
+    .catch(error => {
+      // handle error
+      console.log(error);
+    });
+  }
+
   portfolioItems() {
     return this.state.data.map(item => {
-      return <PortfolioItem title={item.title} url={"google.com"} slug={item.slug} />;
+      return <PortfolioItem 
+      key={item.id} 
+      item={item}
+            />;
     });
+  }
+
+  componentDidMount() {
+    this.getPortfolioItems();
   }
 
   render() {
