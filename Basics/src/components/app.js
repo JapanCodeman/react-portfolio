@@ -15,15 +15,28 @@ import Auth from './pages/auth';
 import NoMatch from './pages/no-match';
 
 export default class App extends Component {
-  // componentDidMount() {
-  //   this.liveTime = setInterval(() => {
-  //     this.setState({ currentTime: String(new Date())})
-  //   }, 1000);
-  // }
+  constructor(props) {
+    super(props);
 
-  // componentWillUnmount() {
-  //   clearInterval(this.liveTime);
-  // }
+    this.state = {
+      loggedInStatus: "NOT_LOGGED_IN"
+    };
+
+    this.handleSuccessfulLogin=this.handleSuccessfulLogin.bind(this)
+    this.handleUnsuccessfulLogin=this.handleUnsuccessfulLogin.bind(this)
+  }
+
+  handleSuccessfulLogin() {
+    this.setState({
+      loggedInStatus: "LOGGED_IN"
+    });
+  }
+
+  handleUnsuccessfulLogin() {
+    this.setState({
+      loggedInStatus: "NOT_LOGGED_IN"
+    });
+  }
 
   render() {
     return (
@@ -32,8 +45,21 @@ export default class App extends Component {
           <div>
             <NavigationContainer /> 
 
+            <h2>{this.state.loggedInStatus}</h2>
+
             <Switch>
               <Route exact path='/' component={Home} />
+
+              <Route
+                path="/auth"
+                render={props => (
+                  <Auth
+                    {...props}
+                    handleSuccessfulLogin={this.handleSuccessfulLogin}
+                    handleUnsuccessfulLogin={this.handleUnsuccessfulLogin}
+                  />
+                )}
+              />
               <Route path='/auth' component={Auth} />
               <Route path='/about-me' component={About} />
               <Route path='/contact' component={Contact} />
