@@ -8,7 +8,7 @@ export default class PortfolioForm extends Component {
     this.state = {
       name: "",
       description: "",
-      category: "",
+      category: "Food Service",
       position: "",
       url: "",
       thumb_image: "",
@@ -39,13 +39,19 @@ export default class PortfolioForm extends Component {
   }
 
   handleSubmit(event) {
-
-    axios.post("https://ryansurdick.devcamp.space/portfolio/portfolio_items", this.buildForm(), { withCredentials: true }
-    ).then(response => {
-      console.log("response", response);
-    }).catch(error => {
-      console.log("portfolio form handleSubmit error", error)
+    axios
+    .post(
+      "https://ryansurdick.devcamp.space/portfolio/portfolio_items", 
+      this.buildForm(), 
+      { withCredentials: true }
+    )
+    .then(response => {
+      this.props.handleSuccessfulFormSubmission(response.data.portfolio_item);
     })
+    .catch(error => {
+      console.log("portfolio form handleSubmit error", error);
+    })
+
     event.preventDefault();
   }
 
@@ -65,34 +71,36 @@ export default class PortfolioForm extends Component {
             />
 
             <input
-            text="text"
-            name="position"
-            placeholder="Position"
-            value={this.state.position}
-            onChange={this.handleChange}
-            />
-          </div>
-
-          <div>
-            <input
               text="text"
               name="url"
               placeholder="URL"
               value={this.state.url}
               onChange={this.handleChange}
               />
-
-            <input
-            text="text"
-            name="category"
-            placeholder="Category"
-            value={this.state.category}
-            onChange={this.handleChange}
-            />
           </div>
 
           <div>
             <input
+              text="text"
+              name="position"
+              placeholder="Position"
+              value={this.state.position}
+              onChange={this.handleChange}
+              />
+
+            <select
+            name="category"
+            value={this.state.category}
+            onChange={this.handleChange}
+            >
+              <option value="Food Service">Food Service</option>
+              <option value="Supportive Care">Supportive Care</option>
+              <option value="Education">Education</option>
+            </select>
+          </div>
+
+          <div>
+            <textarea
             text="text"
             name="description"
             placeholder="Description"
