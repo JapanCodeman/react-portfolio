@@ -12,12 +12,15 @@ export default class PortfolioForm extends Component {
     this.state = {
       name: "",
       description: "",
-      category: "Food Service",
+      category: "Web Design",
       position: "",
       url: "",
       thumb_image: "",
       banner_image: "",
-      logo: ""
+      logo: "",
+      editMode: false,
+      apiUrl: "https://ryansurdick.devcamp.space/portfolio/portfolio_items",
+      apiAction: "post"
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -31,6 +34,36 @@ export default class PortfolioForm extends Component {
     this.thumbRef = React.createRef();
     this.bannerRef = React.createRef();
     this.logoRef = React.createRef();
+  }
+
+  componentDidUpdate() {
+    if (Object.keys(this.props.portfolioToEdit).length > 0) {
+      const {
+        id,
+        name,
+        description,
+        category,
+        position,
+        url,
+        thumb_image_url,
+        banner_image_url,
+        logo_url
+      } = this.props.portfolioToEdit;
+
+      this.props.clearPortfolioToEdit();
+
+      this.setState({
+      id: id,
+      name: name || "",
+      description: description || "",
+      category: category || "Web Design",
+      position: position || "",
+      url: url || "",
+      editMode: true,
+      apiUrl: `https://ryansurdick.devcamp.space/portfolio/portfolio_items/${id}`,
+      apiAction: "patch"
+      })
+    }
   }
 
   handleThumbDrop() {
@@ -97,19 +130,19 @@ export default class PortfolioForm extends Component {
   }
 
   handleSubmit(event) {
-    axios
-    .post(
-      "https://ryansurdick.devcamp.space/portfolio/portfolio_items", 
-      this.buildForm(), 
-      { withCredentials: true }
-    )
+    axios({
+      method: this.state.apiAction,
+      url: this.state.apiUrl,
+      data: this.buildForm(),
+      withCredentials: true
+    })
     .then(response => {
       this.props.handleSuccessfulFormSubmission(response.data.portfolio_item);
 
       this.setState ({
         name: "",
         description: "",
-        category: "Food Service",
+        category: "Web Design",
         position: "",
         url: "",
         thumb_image: "",
@@ -164,8 +197,10 @@ export default class PortfolioForm extends Component {
             onChange={this.handleChange}
             className="select-element"
             >
-              <option value="Food Service">Food Service</option>
-              <option value="Supportive Care">Supportive Care</option>
+              <option value="Web Design">Web Design</option>
+              <option value="Data Management">Data Management</option>
+              <option value="Program Design">Program Design</option>
+              <option value="Future Goals">Future Goals</option>
               <option value="Education">Education</option>
             </select>
           </div>

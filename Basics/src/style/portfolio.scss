@@ -1,6 +1,13 @@
 .portfolio-items-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  .filter-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+
+  .portfolio-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 
   .portfolio-item-wrapper {
     position: relative;
