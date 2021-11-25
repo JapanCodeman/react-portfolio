@@ -29,19 +29,19 @@ class Blog extends Component {
     this.setState({
       blogModalIsOpen: false,
       blogItems: [blog].concat(this.state.blogItems)
-    })
+    });
   }
 
   handleModalClose() {
     this.setState({
       blogModalIsOpen: false
-    })
+    });
   }
 
   handleNewBlogClick() {
     this.setState({
       blogModalIsOpen: true
-    })
+    });
   }
 
   onScroll() {
