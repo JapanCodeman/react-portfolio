@@ -1,10 +1,10 @@
-.portfolio-items-wrapper {
-  .filter-buttons {
+.homepage-wrapper {
+  .filter-links {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   }
 
-  .portfolio-items {
+  .portfolio-items-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -32,10 +32,9 @@
       padding-right: 100px;
       padding-left: 100px;
 
-
-    .subtitle {
-      transition: 1s ease-in-out;
-      color: transparent;
+      .subtitle {
+        transition: 1s ease-in-out;
+        color: transparent;
       }
     }
 
